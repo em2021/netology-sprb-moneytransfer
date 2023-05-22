@@ -2,7 +2,7 @@ HELP.md
 .gradle
 **/build/
 !src/**/build/
-
+/logs/*.log
 
 ### STS ###
 .apt_generated
