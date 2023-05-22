@@ -14,6 +14,11 @@ public class Amount {
 
     }
 
+    public Amount(Integer value, String currency) {
+        this.value = value;
+        this.currency = currency;
+    }
+
     @JsonSetter("value")
     public void setValue(Integer value) {
         this.value = value / 100;
