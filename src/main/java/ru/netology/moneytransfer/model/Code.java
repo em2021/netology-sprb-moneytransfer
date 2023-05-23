@@ -7,6 +7,10 @@ public class Code {
     public Code() {
     }
 
+    public Code(String code) {
+        this.code = code;
+    }
+
     public String getCode() {
         return code;
     }
