@@ -11,7 +11,7 @@ import ru.netology.moneytransfer.service.MoneyTransferService;
 
 import javax.validation.Valid;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MoneyTransferController {
 
