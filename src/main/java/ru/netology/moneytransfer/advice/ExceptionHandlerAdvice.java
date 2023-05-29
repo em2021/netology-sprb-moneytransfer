@@ -12,17 +12,17 @@ import ru.netology.moneytransfer.exception.TransferNotConfirmed;
 public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(InvalidInput.class)
-    public ResponseEntity<String> icHandler(InvalidInput e) {
+    public ResponseEntity<Object> icHandler(InvalidInput e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(TransferNotConfirmed.class)
-    public ResponseEntity<String> uuHandler(TransferNotConfirmed e) {
+    public ResponseEntity<Object> uuHandler(TransferNotConfirmed e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(OperationNotConfirmed.class)
-    public ResponseEntity<String> uuHandler(OperationNotConfirmed e) {
+    public ResponseEntity<Object> uuHandler(OperationNotConfirmed e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
