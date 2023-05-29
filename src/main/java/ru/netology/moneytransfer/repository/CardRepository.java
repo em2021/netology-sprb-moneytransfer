@@ -15,7 +15,7 @@ public class CardRepository {
         return validCards.get(number);
     }
 
-    private static ConcurrentMap<String, Card> init() {
+    private ConcurrentMap<String, Card> init() {
         ConcurrentMap<String, Card> cards = new ConcurrentHashMap<>();
         Card card1 = new Card("1111111111111111", "12", "2023", "123");
         Card card2 = new Card("2222222222222222", "12", "2023", "321");
