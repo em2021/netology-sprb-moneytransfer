@@ -6,5 +6,4 @@ import lombok.Data;
 public class OperationId {
 
     private final String operationId;
-
 }
