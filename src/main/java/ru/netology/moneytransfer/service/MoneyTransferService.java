@@ -20,8 +20,7 @@ public class MoneyTransferService {
 
     @Autowired
     CardRepository cardRepository;
-    @Autowired
-    OperationIdGeneratorService operationIdGeneratorService;
+
     private final Logger logger = LoggerFactory.getLogger("r.n.m.s.MoneyTransferService");
 
     public OperationId makeTransfer(TransferData transferData) {

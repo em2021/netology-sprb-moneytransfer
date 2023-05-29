@@ -20,8 +20,6 @@ public class MoneyTransferServiceTests {
     private MoneyTransferService moneyTransferService;
     @Mock
     CardRepository cardRepository;
-    @Mock
-    OperationIdGeneratorService operationIdGeneratorService;
 
     @BeforeAll
     public static void beforeAll() {
