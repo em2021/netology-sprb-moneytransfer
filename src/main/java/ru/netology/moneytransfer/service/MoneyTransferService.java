@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 import ru.netology.moneytransfer.exception.InvalidInput;
 import ru.netology.moneytransfer.exception.OperationNotConfirmed;
 import ru.netology.moneytransfer.exception.TransferNotConfirmed;
-import ru.netology.moneytransfer.model.Card;
-import ru.netology.moneytransfer.model.Code;
-import ru.netology.moneytransfer.model.OperationId;
-import ru.netology.moneytransfer.model.TransferData;
+import ru.netology.moneytransfer.model.*;
 import ru.netology.moneytransfer.repository.CardRepository;
+import ru.netology.moneytransfer.repository.OperationIdRepository;
 
 import java.util.UUID;
 
@@ -20,6 +18,9 @@ public class MoneyTransferService {
 
     @Autowired
     CardRepository cardRepository;
+
+    @Autowired
+    OperationIdRepository operationIdRepository;
 
     private final Logger logger = LoggerFactory.getLogger("r.n.m.s.MoneyTransferService");
 
@@ -44,18 +45,24 @@ public class MoneyTransferService {
             throw new InvalidInput("Invalid card");
         }
         OperationId operationId = new OperationId(UUID.randomUUID().toString());
+        operationIdRepository.putOperationId(operationId);
         logger.info("Successful transfer in {}; Operation ID: {}", transferData, operationId);
         return operationId;
     }
 
-    public OperationId confirmOperation(Code code) {
-        String verificationCode = code.getCode();
-        if (verificationCode == null) {
+    public OperationId confirmOperation(ConfirmationData confirmationData) {
+        OperationId operationId = confirmationData.getOperationId();
+        Code code = confirmationData.getCode();
+        if (operationId == null || code == null) {
+            logger.error("Error occurred during operation confirmation");
+            throw new InvalidInput("Invalid confirmation data");
+        }
+        if (!operationIdRepository.putCode(operationId, code)) {
             logger.error("Error occurred during operation confirmation");
             throw new OperationNotConfirmed("Operation confirmation error");
         }
         logger.info("Operation confirmed");
-        return new OperationId(UUID.randomUUID().toString());
+        return operationId;
     }
 
     private boolean expirationDateMatches(TransferData transaction, Card card) {

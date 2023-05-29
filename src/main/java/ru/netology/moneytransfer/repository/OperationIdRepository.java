@@ -22,9 +22,11 @@ public class OperationIdRepository {
     }
 
     public boolean putCode(OperationId operationId, Code code) {
-        if (validOperationIds.get(operationId) == null) {
-            validOperationIds.put(operationId, code);
-            return true;
+        if (validOperationIds.containsKey(operationId)) {
+            if (validOperationIds.get(operationId).getCode() == null) {
+                validOperationIds.put(operationId, code);
+                return true;
+            }
         }
         return false;
     }

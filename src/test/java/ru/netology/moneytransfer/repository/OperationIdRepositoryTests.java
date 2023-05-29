@@ -49,12 +49,15 @@ public class OperationIdRepositoryTests {
 
     @ParameterizedTest
     @MethodSource("sourceForPutCode")
-    public void testPutCode_whenAlreadyContains_returnFalse_elseTrue(OperationId opId1, Code code1,
-                                                                     OperationId opId2, Code code2,
+    public void testPutCode_whenAlreadyContains_returnFalse_elseTrue(OperationId opId1,
+                                                                     OperationId opId2,
+                                                                     Code code,
                                                                      boolean expected) {
         //when:
-        operationIdRepository.putCode(opId1, code1);
-        boolean actual = operationIdRepository.putCode(opId2, code2);
+        operationIdRepository.putOperationId(opId1);
+        operationIdRepository.putCode(opId1, code);
+        operationIdRepository.putOperationId(opId2);
+        boolean actual = operationIdRepository.putCode(opId2, code);
         //then:
         Assertions.assertEquals(expected, actual);
     }
@@ -67,9 +70,7 @@ public class OperationIdRepositoryTests {
 
     public static Stream<Arguments> sourceForPutCode() {
         //given:
-        return Stream.of(Arguments.of(new OperationId("123"), new Code("1"),
-                        new OperationId("123"), new Code("1"), false),
-                Arguments.of(new OperationId("123"), new Code("2"),
-                        new OperationId("124"), new Code("2"), true));
+        return Stream.of(Arguments.of(new OperationId("123"), new OperationId("123"), new Code("1"), false),
+                Arguments.of(new OperationId("123"), new OperationId("333"), new Code("1"), true));
     }
 }
