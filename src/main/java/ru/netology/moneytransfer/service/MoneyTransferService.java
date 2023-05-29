@@ -9,8 +9,11 @@ import ru.netology.moneytransfer.exception.OperationNotConfirmed;
 import ru.netology.moneytransfer.exception.TransferNotConfirmed;
 import ru.netology.moneytransfer.model.Card;
 import ru.netology.moneytransfer.model.Code;
+import ru.netology.moneytransfer.model.OperationId;
 import ru.netology.moneytransfer.model.TransferData;
 import ru.netology.moneytransfer.repository.CardRepository;
+
+import java.util.UUID;
 
 @Service
 public class MoneyTransferService {
@@ -21,7 +24,7 @@ public class MoneyTransferService {
     OperationIdGeneratorService operationIdGeneratorService;
     private final Logger logger = LoggerFactory.getLogger("r.n.m.s.MoneyTransferService");
 
-    public String makeTransfer(TransferData transferData) {
+    public OperationId makeTransfer(TransferData transferData) {
         // Check if transfer is not being done to the same card
         if (transferData.getCardFromNumber().equals(transferData.getCardToNumber())) {
             logger.error("Error occurred while making transfer to the same card in {}", transferData);
@@ -41,19 +44,19 @@ public class MoneyTransferService {
             logger.error("Error occurred during card CVV validation in {}", transferData);
             throw new InvalidInput("Invalid card");
         }
-        String transactionId = operationIdGeneratorService.generateId();
-        logger.info("Successful transfer in {}; Operation ID: {}", transferData, transactionId);
-        return transactionId;
+        OperationId operationId = new OperationId(UUID.randomUUID().toString());
+        logger.info("Successful transfer in {}; Operation ID: {}", transferData, operationId);
+        return operationId;
     }
 
-    public String confirmOperation(Code code) {
+    public OperationId confirmOperation(Code code) {
         String verificationCode = code.getCode();
         if (verificationCode == null) {
             logger.error("Error occurred during operation confirmation");
             throw new OperationNotConfirmed("Operation confirmation error");
         }
         logger.info("Operation confirmed");
-        return verificationCode;
+        return new OperationId(UUID.randomUUID().toString());
     }
 
     private boolean expirationDateMatches(TransferData transaction, Card card) {
