@@ -20,9 +20,11 @@ public class MoneyTransferServiceImplTests {
     private CardRepository cardRepositoryImpl;
     @Mock
     private OperationIdRepository operationIdRepositoryImpl;
+    @Mock
+    private CardValidationService cardValidationService;
     @InjectMocks
     private MoneyTransferService moneyTransferServiceImpl =
-            new MoneyTransferServiceImpl(cardRepositoryImpl, operationIdRepositoryImpl);
+            new MoneyTransferServiceImpl(cardRepositoryImpl, operationIdRepositoryImpl, cardValidationService);
 
     @BeforeAll
     public static void beforeAll() {
