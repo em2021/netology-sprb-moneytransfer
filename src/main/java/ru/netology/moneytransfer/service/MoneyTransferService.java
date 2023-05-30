@@ -1,8 +1,8 @@
 package ru.netology.moneytransfer.service;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.netology.moneytransfer.exception.InvalidInput;
 import ru.netology.moneytransfer.exception.OperationNotConfirmed;
@@ -14,14 +14,11 @@ import ru.netology.moneytransfer.repository.OperationIdRepository;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class MoneyTransferService {
 
-    @Autowired
-    CardRepository cardRepository;
-
-    @Autowired
-    OperationIdRepository operationIdRepository;
-
+    private final CardRepository cardRepository;
+    private final OperationIdRepository operationIdRepository;
     private final Logger logger = LoggerFactory.getLogger("r.n.m.s.MoneyTransferService");
 
     public OperationId makeTransfer(TransferData transferData) {

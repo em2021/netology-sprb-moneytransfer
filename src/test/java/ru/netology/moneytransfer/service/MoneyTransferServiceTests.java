@@ -24,6 +24,7 @@ public class MoneyTransferServiceTests {
         System.out.println("MoneyTransferServiceTests tests started");
     }
 
+    //TODO: Fix test setup
     @BeforeEach
     public void setUp() {
         moneyTransferService = new MoneyTransferService();
