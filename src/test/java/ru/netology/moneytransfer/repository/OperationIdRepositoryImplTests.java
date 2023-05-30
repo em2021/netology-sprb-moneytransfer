@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class OperationIdRepositoryImplTests {
 
-    private OperationIdRepositoryImpl operationIdRepositoryImpl;
+    private OperationIdRepository operationIdRepositoryImpl;
 
     @BeforeAll
     static void beforeAll() {
@@ -39,7 +39,6 @@ public class OperationIdRepositoryImplTests {
     public void testPutOperationId_whenAlreadyContains_returnFalse_elseTrue(OperationId opId1,
                                                                             OperationId opId2,
                                                                             boolean expected) {
-
         //when:
         operationIdRepositoryImpl.putOperationId(opId1);
         boolean actual = operationIdRepositoryImpl.putOperationId(opId2);
