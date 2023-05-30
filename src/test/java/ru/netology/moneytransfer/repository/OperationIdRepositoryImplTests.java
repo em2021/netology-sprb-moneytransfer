@@ -9,29 +9,29 @@ import ru.netology.moneytransfer.model.OperationId;
 
 import java.util.stream.Stream;
 
-public class OperationIdRepositoryTests {
+public class OperationIdRepositoryImplTests {
 
-    private OperationIdRepository operationIdRepository;
+    private OperationIdRepositoryImpl operationIdRepositoryImpl;
 
     @BeforeAll
     static void beforeAll() {
-        System.out.println("OperationIdRepositoryTests tests started");
+        System.out.println("OperationIdRepositoryImplTests tests started");
     }
 
     @BeforeEach
     void setUp() {
-        operationIdRepository = new OperationIdRepository();
-        System.out.println("OperationIdRepositoryTests test started");
+        operationIdRepositoryImpl = new OperationIdRepositoryImpl();
+        System.out.println("OperationIdRepositoryImplTests test started");
     }
 
     @AfterEach
     void tearDown() {
-        System.out.println("OperationIdRepositoryTests test completed");
+        System.out.println("OperationIdRepositoryImplTests test completed");
     }
 
     @AfterAll
     static void afterAll() {
-        System.out.println("OperationIdRepositoryTests tests completed");
+        System.out.println("OperationIdRepositoryImplTests tests completed");
     }
 
     @ParameterizedTest
@@ -41,8 +41,8 @@ public class OperationIdRepositoryTests {
                                                                             boolean expected) {
 
         //when:
-        operationIdRepository.putOperationId(opId1);
-        boolean actual = operationIdRepository.putOperationId(opId2);
+        operationIdRepositoryImpl.putOperationId(opId1);
+        boolean actual = operationIdRepositoryImpl.putOperationId(opId2);
         //then:
         Assertions.assertEquals(expected, actual);
     }
@@ -54,10 +54,10 @@ public class OperationIdRepositoryTests {
                                                                      Code code,
                                                                      boolean expected) {
         //when:
-        operationIdRepository.putOperationId(opId1);
-        operationIdRepository.putCode(opId1, code);
-        operationIdRepository.putOperationId(opId2);
-        boolean actual = operationIdRepository.putCode(opId2, code);
+        operationIdRepositoryImpl.putOperationId(opId1);
+        operationIdRepositoryImpl.putCode(opId1, code);
+        operationIdRepositoryImpl.putOperationId(opId2);
+        boolean actual = operationIdRepositoryImpl.putCode(opId2, code);
         //then:
         Assertions.assertEquals(expected, actual);
     }

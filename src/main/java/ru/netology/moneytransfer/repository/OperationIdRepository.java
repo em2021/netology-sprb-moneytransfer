@@ -1,33 +1,11 @@
 package ru.netology.moneytransfer.repository;
 
-
-import org.springframework.stereotype.Repository;
 import ru.netology.moneytransfer.model.Code;
 import ru.netology.moneytransfer.model.OperationId;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+public interface OperationIdRepository {
 
-@Repository
-public class OperationIdRepository {
+    boolean putOperationId(OperationId operationId);
 
-    private final Map<OperationId, Code> validOperationIds = new ConcurrentHashMap<>();
-
-    public boolean putOperationId(OperationId operationId) {
-        if (validOperationIds.containsKey(operationId)) {
-            return false;
-        }
-        validOperationIds.putIfAbsent(operationId, new Code());
-        return true;
-    }
-
-    public boolean putCode(OperationId operationId, Code code) {
-        if (validOperationIds.containsKey(operationId)) {
-            if (validOperationIds.get(operationId).getCode() == null) {
-                validOperationIds.put(operationId, code);
-                return true;
-            }
-        }
-        return false;
-    }
+    boolean putCode(OperationId operationId, Code code);
 }

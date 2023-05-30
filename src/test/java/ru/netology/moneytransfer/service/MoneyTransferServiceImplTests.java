@@ -11,35 +11,39 @@ import ru.netology.moneytransfer.model.Amount;
 import ru.netology.moneytransfer.model.Card;
 import ru.netology.moneytransfer.model.TransferData;
 import ru.netology.moneytransfer.repository.CardRepository;
+import ru.netology.moneytransfer.repository.OperationIdRepository;
 
-public class MoneyTransferServiceTests {
+public class MoneyTransferServiceImplTests {
 
-    @InjectMocks
-    private MoneyTransferService moneyTransferService;
+    //TODO: Review field declaration
     @Mock
-    CardRepository cardRepository;
+    private CardRepository cardRepositoryImpl;
+    @Mock
+    private OperationIdRepository operationIdRepositoryImpl;
+    @InjectMocks
+    private MoneyTransferService moneyTransferServiceImpl =
+            new MoneyTransferServiceImpl(cardRepositoryImpl, operationIdRepositoryImpl);
 
     @BeforeAll
     public static void beforeAll() {
-        System.out.println("MoneyTransferServiceTests tests started");
+        System.out.println("MoneyTransferServiceImplTests tests started");
     }
 
     //TODO: Fix test setup
     @BeforeEach
     public void setUp() {
-        moneyTransferService = new MoneyTransferService();
         MockitoAnnotations.openMocks(this);
         System.out.println("MoneyTransferServiceTests test started");
     }
 
     @AfterEach
     public void tearDown() {
-        System.out.println("MoneyTransferServiceTests test completed");
+        System.out.println("MoneyTransferServiceImplTests test completed");
     }
 
     @AfterAll
     public static void afterAll() {
-        System.out.println("MoneyTransferServiceTests tests completed");
+        System.out.println("MoneyTransferServiceImplTests tests completed");
     }
 
     @Test
@@ -54,7 +58,7 @@ public class MoneyTransferServiceTests {
         //then:
         Assertions.assertThrows(TransferNotConfirmed.class, () -> {
             //when:
-            moneyTransferService.makeTransfer(transferData);
+            moneyTransferServiceImpl.makeTransfer(transferData);
         });
     }
 
@@ -67,12 +71,12 @@ public class MoneyTransferServiceTests {
                 "123",
                 "4567456745674567",
                 amount);
-        Mockito.when(cardRepository.getCard(transferData.getCardFromNumber()))
+        Mockito.when(cardRepositoryImpl.getCard(transferData.getCardFromNumber()))
                 .thenReturn(null);
         //then:
         Assertions.assertThrows(InvalidInput.class, () -> {
             //when:
-            moneyTransferService.makeTransfer(transferData);
+            moneyTransferServiceImpl.makeTransfer(transferData);
         });
     }
 
@@ -86,12 +90,12 @@ public class MoneyTransferServiceTests {
                 "4567456745674567",
                 amount);
         Card card = new Card("1234123412341234", "12", "2024", "123");
-        Mockito.when(cardRepository.getCard(transferData.getCardFromNumber()))
+        Mockito.when(cardRepositoryImpl.getCard(transferData.getCardFromNumber()))
                 .thenReturn(card);
         //then:
         Assertions.assertThrows(InvalidInput.class, () -> {
             //when:
-            moneyTransferService.makeTransfer(transferData);
+            moneyTransferServiceImpl.makeTransfer(transferData);
         });
     }
 
@@ -105,12 +109,12 @@ public class MoneyTransferServiceTests {
                 "4567456745674567",
                 amount);
         Card card = new Card("1234123412341234", "12", "2023", "124");
-        Mockito.when(cardRepository.getCard(transferData.getCardFromNumber()))
+        Mockito.when(cardRepositoryImpl.getCard(transferData.getCardFromNumber()))
                 .thenReturn(card);
         //then:
         Assertions.assertThrows(InvalidInput.class, () -> {
             //when:
-            moneyTransferService.makeTransfer(transferData);
+            moneyTransferServiceImpl.makeTransfer(transferData);
         });
     }
 
@@ -124,12 +128,12 @@ public class MoneyTransferServiceTests {
                 "4567456745674567",
                 amount);
         Card card = new Card("1234123412341234", "12", "2023", "123");
-        Mockito.when(cardRepository.getCard(transferData.getCardFromNumber()))
+        Mockito.when(cardRepositoryImpl.getCard(transferData.getCardFromNumber()))
                 .thenReturn(card);
         //then:
         Assertions.assertDoesNotThrow(() -> {
             //when:
-            moneyTransferService.makeTransfer(transferData);
+            moneyTransferServiceImpl.makeTransfer(transferData);
         });
     }
 //TODO: Fix test for new method code
