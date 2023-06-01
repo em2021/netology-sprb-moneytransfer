@@ -92,10 +92,10 @@ class MoneyTransferApplicationTests {
                         400),
                 Arguments.of(new HttpEntity<>(new Code("0000")),
                         "/confirmOperation",
-                        200),
+                        400),
                 Arguments.of(new HttpEntity<>(new Code()),
                         "/confirmOperation",
-                        500));
+                        400));
 
     }
 }
