@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
-@NoArgsConstructor
-public class Code {
+public class OperationId {
 
-    private String code;
+    private final String operationId;
 }

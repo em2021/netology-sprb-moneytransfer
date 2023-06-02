@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.netology.moneytransfer.model.Code;
+import ru.netology.moneytransfer.model.ConfirmationData;
+import ru.netology.moneytransfer.model.OperationId;
 import ru.netology.moneytransfer.model.TransferData;
 import ru.netology.moneytransfer.service.MoneyTransferService;
 
 import javax.validation.Valid;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MoneyTransferController {
 
@@ -19,13 +20,13 @@ public class MoneyTransferController {
     MoneyTransferService moneyTransferService;
 
     @PostMapping("/transfer")
-    public String transfer(@Valid @RequestBody TransferData transferData) {
+    public OperationId transfer(@Valid @RequestBody TransferData transferData) {
         return moneyTransferService.makeTransfer(transferData);
     }
 
     @PostMapping("/confirmOperation")
-    public String confirm(@Valid @RequestBody Code code) {
-        return moneyTransferService.confirmOperation(code);
+    public OperationId confirm(@Valid @RequestBody ConfirmationData confirmationData) {
+        return moneyTransferService.confirmOperation(confirmationData);
     }
 
 }
